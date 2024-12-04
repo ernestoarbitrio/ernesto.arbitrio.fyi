@@ -7,6 +7,7 @@ categories: ["Python"]
 tags: ["python", "advanced-features"]
 socialShareLink: true
 image: "cover.png"
+shareButtons: true
 ---
 
 It can happen that, sometimes, you need a CLI for you application, and maybe could be

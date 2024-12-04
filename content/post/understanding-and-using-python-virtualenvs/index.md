@@ -5,6 +5,7 @@ date: 2018-06-19
 draft: false
 categories: ["Virtualenvs", "Python"]
 tags: ["python", "python-virtualenv"]
+shareButtons: true
 ---
 
 A Virtual Environment is a real good way to keep the dependencies
@@ -343,7 +344,7 @@ conda install -c r r-essentials
 and now starting jupyter notebook from your virtual environment
 `$ jupyter notebook` you are able to create a new R notebook:
 
-![Jupyter](/images/jupyter_r.png)
+![Jupyter](jupyter.png)
 
 ## References
 

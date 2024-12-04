@@ -54,3 +54,11 @@ imageProcessing:
     enabled: true
 comments:
   enabled: false
+shareButtons:
+  size: small
+  networks:
+    - linkedin
+    - mastodon
+    - email
+  icon: solid
+  buttonMargin: 0.2em
