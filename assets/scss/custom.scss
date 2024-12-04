@@ -1,3 +1,63 @@
-/*
-    You can add your own custom styles here.
-*/
+:root {
+    --menu-icon-separation: 7px;
+    --container-padding: 15px;
+    --widget-separation: var(--section-separation);
+}
+
+figcaption {
+    display: none;
+}
+
+.social-menu {
+    display: flex;
+    align-items: center; /* Align items vertically centered if needed */
+    justify-content: center; /* Center items horizontally if needed */
+    list-style-type: none; /* Remove default list styling */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+}
+
+.social-menu li {
+    margin: 0 10px; /* Adjust spacing between icons as needed */
+}
+
+.social-menu svg {
+    width: 28px;
+    height: 28px;
+    stroke: var(--body-text-color);
+    stroke-width: 1.33;
+}
+
+.right-sidebar.sticky {
+    top: 0;
+    max-width: 18%;
+}
+
+.left-sidebar {
+    --sidebar-avatar-size: 150px;
+    align-items: center;
+}
+
+.sidebar header .site-avatar {
+    align-self: center;
+}
+
+.sidebar header .site-name {
+    align-self: center;
+    font-size: 2.6rem;
+}
+
+.sidebar header .site-description {
+    font-size: 1.8rem;
+    align-self: center;
+}
+
+.menu li span {
+    font-size: 2.0rem;
+}
+
+.menu li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -1,0 +1,12 @@
+baseURL: https://ernesto.arbitrio.fyi
+languageCode: en-us
+title: Ernesto Arbitrio
+schema: true
+permalinks:
+  page:
+    posts: /posts/:slug/
+pagination.pagerSize: 5
+services:
+  rss:
+    limit: 30
+uglyURLs: false
