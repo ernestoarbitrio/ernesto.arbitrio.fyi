@@ -10,7 +10,13 @@ socialShareLink: true
 shareButtons: true
 ---
 
-Are you tired of jumping through hoops to run Python tests, especially in complex environments like Docker? Meet the **Pytest Runner**, a Visual Studio Code extension designed to make running Python tests a breeze. Whether you’re executing single tests, modules, or working with local and containerized setups, Pytest Runner streamlines your workflow for a faster, more intuitive testing experience.
+Are you tired of jumping through hoops to run Python tests, especially in complex
+environments like Docker? Meet the **Pytest Runner**, a Visual Studio Code extension
+designed to make running Python tests a breeze. Whether you’re executing single tests,
+modules, or working with local and containerized setups, Pytest Runner streamlines your
+workflow for a faster, more intuitive testing experience.
+
+[💾 Source code](https://github.com/ernestoarbitrio/pytest-runner)
 
 ## Install Pytest Runner Plugin  
 
@@ -58,7 +64,7 @@ If a test function doesn’t follow these naming conventions, Pytest Runner will
 - Pytest: The only hard requirement.
 - Currently tested on macOS and Linux.
 
-## Extension Settings ⚙️
+## ⚙️ Extension Settings
 
 This extension offers several customizable settings:
 
