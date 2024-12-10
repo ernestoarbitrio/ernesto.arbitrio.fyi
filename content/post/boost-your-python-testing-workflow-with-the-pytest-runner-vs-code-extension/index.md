@@ -58,6 +58,27 @@ If a test function doesn’t follow these naming conventions, Pytest Runner will
 - Pytest: The only hard requirement.
 - Currently tested on macOS and Linux.
 
+## Extension Settings ⚙️
+
+This extension offers several customizable settings:
+
+- `pytest_runner.pytest_exec`: Specifies the local pytest executable. Defaults to your active virtual environment or /usr/bin/pytest.
+- `pytest_runner.pytest_exec_docker`: Command to run pytest in a Docker container (e.g., docker-compose run --rm test-container pytest).
+- `pytest_runner.check_config`: Enables/disables configuration checks (default: false).
+- `pytest_runner.pytest_options`: Additional pytest options (e.g., -sv, -x).
+
+These options can be set in each settings.json within .vscode in the project root directory or in the settings.json of VSCode (not recommended).
+
+*File example:*
+
+```json
+{
+    "pytest_runner.pytest_exec": "./venv/bin/pytest",
+    "pytest_runner.pytest_exec_docker": "docker-compose -f docker-compose.testing.yml run --rm testrunner_container pytest",
+    "pytest_runner.pytest_options": "-vx",
+}
+```
+
 ## 🎯 Usage
 
 ### Commands
