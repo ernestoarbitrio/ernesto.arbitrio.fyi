@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Test on Ernesto Arbitrio</title><link>https://ernesto.arbitrio.fyi/tags/test/</link><description>Recent content in Test on Ernesto Arbitrio</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 09 Dec 2024 12:52:43 +0100</lastBuildDate><atom:link href="https://ernesto.arbitrio.fyi/tags/test/index.xml" rel="self" type="application/rss+xml"/><item><title>Boost Your Python Testing Workflow with the Pytest Runner VS Code Extension</title><link>https://ernesto.arbitrio.fyi/p/boost-your-python-testing-workflow-with-the-pytest-runner-vs-code-extension/</link><pubDate>Mon, 09 Dec 2024 12:52:43 +0100</pubDate><guid>https://ernesto.arbitrio.fyi/p/boost-your-python-testing-workflow-with-the-pytest-runner-vs-code-extension/</guid><description>&lt;img src="https://ernesto.arbitrio.fyi/p/boost-your-python-testing-workflow-with-the-pytest-runner-vs-code-extension/cover.png" alt="Featured image of post Boost Your Python Testing Workflow with the Pytest Runner VS Code Extension" />&lt;p>Are you tired of jumping through hoops to run Python tests, especially in complex
+environments like Docker? Meet the &lt;strong>Pytest Runner&lt;/strong>, a Visual Studio Code extension
+designed to make running Python tests a breeze. Whether you’re executing single tests,
+modules, or working with local and containerized setups, Pytest Runner streamlines your
+workflow for a faster, more intuitive testing experience.&lt;/p>
+&lt;p>&lt;a class="link" href="https://github.com/ernestoarbitrio/pytest-runner" target="_blank" rel="noopener"
+>💾 Source code&lt;/a>&lt;/p>
+&lt;h2 id="install-pytest-runner-plugin">Install Pytest Runner Plugin
+&lt;/h2>&lt;p>Getting started with &lt;strong>Pytest Runner&lt;/strong> is easy! Install the plugin directly from the &lt;a class="link" href="https://marketplace.visualstudio.com/items?itemName=pamaron.pytest-runner" target="_blank" rel="noopener"
+>Visual Studio Code Marketplace&lt;/a>. Click the link to install it instantly. Once installed, you’ll be ready to run Python tests effortlessly with just a few clicks or commands. Wanna know more? &lt;strong>Continue reading 👇&lt;/strong>&lt;/p>
+&lt;h2 id="-why-pytest-runner">🚀 Why Pytest Runner?
+&lt;/h2>&lt;p>Modern testing can feel cumbersome. Take my job as an example: most tests run in a Docker-based architecture, requiring me to manage remote interpreters and lengthy pytest identifiers like &lt;code>test_module.py::test_function&lt;/code>. This process wasn’t just slow—it was frustrating. I created Pytest Runner to simplify testing, inspired by tools like &lt;a class="link" href="https://vimawesome.com/plugin/pytest-vim" target="_blank" rel="noopener"
+>pytest-vim&lt;/a>.&lt;/p>
+&lt;p>This extension focuses on one goal: reducing friction in Python testing. With Pytest Runner, you can focus on writing great code while the extension handles the grunt work.&lt;/p>
+&lt;h2 id="-features">🌟 Features
+&lt;/h2>&lt;ul>
+&lt;li>&lt;strong>Run tests locally or in Docker&lt;/strong>: Execute individual tests or entire test modules effortlessly, using either local environments or Dockerized setups.&lt;/li>
+&lt;li>&lt;strong>Configuration checks&lt;/strong>: Optional inspection of &lt;code>setup.cfg&lt;/code> or &lt;code>pyproject.toml&lt;/code> files ensures your test files follow your project&amp;rsquo;s conventions.&lt;/li>
+&lt;li>&lt;strong>Customizable settings&lt;/strong>: Tailor pytest commands, options, and configurations to fit your unique workflow.&lt;/li>
+&lt;/ul>
+&lt;h2 id="-configuration-check-an-extra-layer-of-validation">📋 Configuration Check: An Extra Layer of Validation
+&lt;/h2>&lt;p>Pytest Runner checks your project’s configuration files when enabled. For example, given a &lt;code>pyproject.toml&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-toml" data-lang="toml">&lt;span class="line">&lt;span class="cl">&lt;span class="p">[&lt;/span>&lt;span class="nx">tool&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">pytest&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">ini_options&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">python_classes&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;Test&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;Describe&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">python_functions&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;test_&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;it_&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;and_&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;but_&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;they_&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">python_files&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;test_*.py&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">testpaths&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;tests&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>or a &lt;code>setup.cfg&lt;/code> file like:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-ini" data-lang="ini">&lt;span class="line">&lt;span class="cl">&lt;span class="k">[tool:pytest]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">python_classes&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">Test Describe&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">python_files&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">test_*.py&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">python_functions&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">test_ it_ they_ but_ and_it_&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="na">testpaths&lt;/span> &lt;span class="o">=&lt;/span>&lt;span class="s">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> tests&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>If a test function doesn’t follow these naming conventions, Pytest Runner will halt and notify you with an error message.&lt;/p>
+&lt;h2 id="-requirements">🛠️ Requirements
+&lt;/h2>&lt;ul>
+&lt;li>Pytest: The only hard requirement.&lt;/li>
+&lt;li>Currently tested on macOS and Linux.&lt;/li>
+&lt;/ul>
+&lt;h2 id="-extension-settings">⚙️ Extension Settings
+&lt;/h2>&lt;p>This extension offers several customizable settings:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>pytest_runner.pytest_exec&lt;/code>: Specifies the local pytest executable. Defaults to your active virtual environment or /usr/bin/pytest.&lt;/li>
+&lt;li>&lt;code>pytest_runner.pytest_exec_docker&lt;/code>: Command to run pytest in a Docker container (e.g., docker-compose run &amp;ndash;rm test-container pytest).&lt;/li>
+&lt;li>&lt;code>pytest_runner.check_config&lt;/code>: Enables/disables configuration checks (default: false).&lt;/li>
+&lt;li>&lt;code>pytest_runner.pytest_options&lt;/code>: Additional pytest options (e.g., -sv, -x).&lt;/li>
+&lt;/ul>
+&lt;p>These options can be set in each settings.json within .vscode in the project root directory or in the settings.json of VSCode (not recommended).&lt;/p>
+&lt;p>&lt;em>File example:&lt;/em>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;pytest_runner.pytest_exec&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;./venv/bin/pytest&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;pytest_runner.pytest_exec_docker&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;docker-compose -f docker-compose.testing.yml run --rm testrunner_container pytest&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;pytest_runner.pytest_options&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;-vx&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="-usage">🎯 Usage
+&lt;/h2>&lt;h3 id="commands">Commands
+&lt;/h3>&lt;ul>
+&lt;li>Run Test: Execute a single test locally.&lt;/li>
+&lt;li>Run Test Docker: Execute a single test in Docker.&lt;/li>
+&lt;li>Run Test Module: Run all tests in the current file locally.&lt;/li>
+&lt;li>Run Test Module Docker: Run all tests in the current file via Docker.&lt;/li>
+&lt;li>Access these commands via the VSCode command palette (⇧⌘P or Ctrl+⇧P) or use the custom buttons in the status bar.&lt;/li>
+&lt;/ul>
+&lt;p>Access these commands via the VSCode command palette &lt;code>(⇧⌘P or Ctrl+⇧P)&lt;/code> or use the custom buttons in the status bar.&lt;/p>
+&lt;h2 id="-running-tests">▶️ Running Tests
+&lt;/h2>&lt;p>Place your cursor within a test function or class to execute it directly.
+Alternatively, select the test name or a portion of it and run the desired command.
+For module-level tests, use the appropriate command regardless of cursor location.&lt;/p>
+&lt;p>💡 Pro Tip: Create keyboard shortcuts for frequently used commands to save time!&lt;/p>
+&lt;h2 id="-keybindings">⌨️ Keybindings
+&lt;/h2>&lt;p>Define shortcuts for a more productive workflow:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;key&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;ctrl+alt+1&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;command&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;pytest-runner.run-test&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>&lt;span class="err">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;key&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;ctrl+alt+2&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;command&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;pytest-runner.run-module-test&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Run single tests with Ctrl+Alt+1 and module tests with Ctrl+Alt+2 (or any combination you prefer).&lt;/p>
+&lt;h2 id="install-pytest-runner">Install Pytest Runner
+&lt;/h2>&lt;p>&lt;a class="link" href="vscode:extension/pamaron.pytest-runner" >💾 Install pytest runner&lt;/a>&lt;/p></description></item></channel></rss>
