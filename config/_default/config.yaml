@@ -9,4 +9,6 @@ pagination.pagerSize: 5
 services:
   rss:
     limit: 30
+  googleAnalytics:
+    id: G-L18ZJ5LY2H
 uglyURLs: false
