@@ -1,0 +1,226 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="A Virtual Environment is a real good way to keep the dependencies required by different projects in separate places, by creating virtual Python environments for each of them. It solves the &ldquo;Project X depends on version 1.x but, Project Y needs 4.x&rdquo; dilemma, and keeps your global site-packages directory clean and manageable. For example, you can work on a project which requires matplotlib 1.5.3 while also maintaining a project which requires matplotlib 1.4.2.\n"><title>Understanding and use python virtualenvs from Data Scientist perspective</title>
+<link rel=canonical href=https://ernesto.arbitrio.fyi/p/understanding-and-use-python-virtualenvs-from-data-scientist-perspective/><link rel=stylesheet href=/scss/style.min.3148cfb15fa29b928d475c6fc453c58f0705eb56d379e2789ba6fcac7c33d1d8.css><meta property='og:title' content="Understanding and use python virtualenvs from Data Scientist perspective"><meta property='og:description' content="A Virtual Environment is a real good way to keep the dependencies required by different projects in separate places, by creating virtual Python environments for each of them. It solves the &ldquo;Project X depends on version 1.x but, Project Y needs 4.x&rdquo; dilemma, and keeps your global site-packages directory clean and manageable. For example, you can work on a project which requires matplotlib 1.5.3 while also maintaining a project which requires matplotlib 1.4.2.\n"><meta property='og:url' content='https://ernesto.arbitrio.fyi/p/understanding-and-use-python-virtualenvs-from-data-scientist-perspective/'><meta property='og:site_name' content='Ernesto Arbitrio'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='python'><meta property='article:tag' content='python-virtualenv'><meta property='article:published_time' content='2018-06-19T00:00:00+00:00'><meta property='article:modified_time' content='2018-06-19T00:00:00+00:00'><meta name=twitter:title content="Understanding and use python virtualenvs from Data Scientist perspective"><meta name=twitter:description content="A Virtual Environment is a real good way to keep the dependencies required by different projects in separate places, by creating virtual Python environments for each of them. It solves the &ldquo;Project X depends on version 1.x but, Project Y needs 4.x&rdquo; dilemma, and keeps your global site-packages directory clean and manageable. For example, you can work on a project which requires matplotlib 1.5.3 while also maintaining a project which requires matplotlib 1.4.2.\n"><link rel="shortcut icon" href=/favicon.png><script async src="https://www.googletagmanager.com/gtag/js?id=G-L18ZJ5LY2H"></script><script>var dnt,doNotTrack=!1;if(!1&&(dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes"),!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-L18ZJ5LY2H")}</script></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/ea-avatar_hu8252815294587868422.png width=300 height=300 class=site-logo loading=lazy alt=Avatar></a></figure><div class=site-meta><h1 class=site-name><a href=/>Ernesto Arbitrio</a></h1><h2 class=site-description>Software Engineer</h2></div></header><ol class=menu-social><li><a href=https://github.com/ernestoarbitrio target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://mastodon.social/@pamaron target=_blank title=Mastodon rel=me><svg class="icon icon-tabler icon-tabler-brand-mastodon" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18.648 15.254C16.832 17.017 12 16.88 12 16.88a18.262 18.262.0 01-3.288-.256c1.127 1.985 4.12 2.81 8.982 2.475-1.945 2.013-13.598 5.257-13.668-7.636L4 10.309c0-3.036.023-4.115 1.352-5.633C7.023 2.766 12 3.01 12 3.01s4.977-.243 6.648 1.667C19.977 6.195 20 7.274 20 10.31s-.456 4.074-1.352 4.944z"/><path d="M12 11.204V8.278C12 7.02 11.105 6 10 6S8 7.02 8 8.278V13m4-4.722C12 7.02 12.895 6 14 6s2 1.02 2 2.278V13"/></svg></a></li><li><a href=https://www.linkedin.com/in/ernestoarbitrio target=_blank title=LinkedIn rel=me><svg class="icon icon-tabler icon-tabler-brand-linkedin" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4m0 2a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M8 11v5"/><path d="M8 8v.01"/><path d="M12 16v-5"/><path d="M16 16v-3a2 2 0 00-4 0"/></svg></a></li><li><a href=/index.xml target=_blank title=RSS rel=me><svg class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="5" cy="19" r="1"/><path d="M4 4a16 16 0 0116 16"/><path d="M4 11a9 9 0 019 9"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><span>Home</span></a></li><li><a href=/about/><span>About</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#virtualenv>Virtualenv</a></li><li><a href=#basic-usage>Basic usage</a></li><li><a href=#extra-commands>Extra commands</a></li><li><a href=#the-anaconda-python-distribution>The Anaconda© <em>python</em> distribution</a><ol><li><a href=#import-and-export-a-conda-environment>Import and Export a conda environment</a></li></ol></li><li><a href=#references>References</a></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/virtualenvs/>Virtualenvs
+</a><a href=/categories/python/>Python</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/p/understanding-and-use-python-virtualenvs-from-data-scientist-perspective/>Understanding and use python virtualenvs from Data Scientist perspective</a></h2></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Jun 19, 2018</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>8 minute read</time></div></footer></div></header><section class=article-content><p>A Virtual Environment is a real good way to keep the dependencies
+required by different projects in separate places, by creating virtual
+Python environments for each of them. It solves the &ldquo;Project X depends
+on version 1.x but, Project Y needs 4.x&rdquo; dilemma, and keeps your global
+site-packages directory clean and manageable. For example, you can work
+on a project which requires <code>matplotlib 1.5.3</code> while also maintaining a
+project which requires <code>matplotlib 1.4.2</code>.</p><p>There are different tools that can manage python virtual environment,
+those I will show are:</p><ul><li>virtualenv</li><li>anaconda (by continuum analytics)</li></ul><p>The first one is the most popular for general pourpose coding projects,
+anaconda is much more suitable for who works in data science field. In
+this post I would like to explain out how to install and use both of
+them to create your python virtualenv.</p><h2 id=virtualenv>Virtualenv</h2><p>When you run <code>virtualenv</code> command inside your shell, it
+creates a folder which contains all the necessary executables to use the
+packages that a Python project would need.</p><p>To install virtualenv via pip:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>pip install virtualenv
+</span></span></code></pre></td></tr></table></div></div><p>To install python pip via s.o. package manager (ubuntu for instance):</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo apt-get install python-pip
+</span></span></code></pre></td></tr></table></div></div><h2 id=basic-usage>Basic usage</h2><p>Create a firt virtual environment for your project:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>cd</span> my_venv_dir
+</span></span><span class=line><span class=cl>virtualenv myproject
+</span></span></code></pre></td></tr></table></div></div><p><code>virtualenv myproject</code> will create a folder in the directory you are
+which will contain the Python executable files, and a copy of the pip
+library which you can use to install other packages. Usually I do not
+create the virtual environment within the source code directory in order
+to keep venv and code separate. In this way I don't need to exclude the
+virtualenv directory from the version control system I will use for
+software versioning.</p><p>In your virtualenvironment directory you shuold have something like
+this:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ ls -la
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>drwxr-xr-x  <span class=m>16</span> user  staff  <span class=m>544</span> May <span class=m>15</span> 06:33 bin
+</span></span><span class=line><span class=cl>drwxr-xr-x   <span class=m>3</span> user  staff  <span class=m>102</span> May <span class=m>15</span> 06:30 include
+</span></span><span class=line><span class=cl>drwxr-xr-x   <span class=m>4</span> user  staff  <span class=m>136</span> May <span class=m>15</span> 06:33 lib
+</span></span><span class=line><span class=cl>-rw-r--r--   <span class=m>1</span> user  staff   <span class=m>60</span> May <span class=m>15</span> 06:33 pip-selfcheck.json
+</span></span></code></pre></td></tr></table></div></div><p>You can also use the Python interpreter of your choice (like python2.7).</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>virtualenv -p /usr/local/bin/python2 myproject
+</span></span></code></pre></td></tr></table></div></div><p>Naturally you need change the python 2 path with yours.</p><p>To begin using the virtual environment, it needs to be activated:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>source</span> /myproject/bin/activate
+</span></span></code></pre></td></tr></table></div></div><p>The name of the current virtual environment will now appear as prefix of
+the prompt (e.g. <code>$(myproject)username@yourcomputer</code>) to let you know
+that it&rsquo;s active. From now on, any package that you install using pip
+will be placed in the myproject folder, in this way the global Python
+installation will remain clean.</p><p>Install packages as usual:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>pip install matplotlib
+</span></span></code></pre></td></tr></table></div></div><p>If you want to deactivate your virtualenv with:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>deactivate
+</span></span></code></pre></td></tr></table></div></div><p>This puts you back to the system&rsquo;s default Python interpreter with all
+its installed libraries.</p><p>To delete a virtual environment, just delete the folder. (In this case,
+it would be <code>rm -rf myproject</code>.)</p><p>After a while, though, you might end up with a lot of virtual
+environments littered across your system, and its possible you&rsquo;ll forget
+their names or where they were placed.</p><h2 id=extra-commands>Extra commands</h2><p>In order to keep your environment consistent, it&rsquo;s a good idea to
+&ldquo;freeze&rdquo; the current state of the environment packages. To do this, run</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>pip freeze &gt; requirements.txt
+</span></span></code></pre></td></tr></table></div></div><p>This will create a requirements.txt file, which contains a list of all
+the packages in the current environment, and their respective versions.
+You can see the list of installed packages without the requirements
+format using <code>pip list</code>. Later it will be easier for a different
+developer (or you, if you need to re-create the environment) to install
+the same packages using the same versions:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>pip install -r requirements.txt
+</span></span></code></pre></td></tr></table></div></div><p>Remember to add the <em>requirements file</em> in your current project
+directory; this can help ensure consistency across installations, across
+deployments, and across developers.</p><p>Now let's take a look to the packages you need for starting a new
+virtual environment for data analytics projects. The most used by me
+are: <code>numpy</code>, <code>pandas</code>, <code>matplotlib</code>, <code>jupyter notebook</code>, <code>scipy</code>;
+naturaly each of you can use those who prefer.</p><p>As you can see in the previous paragraphs to install a python lib in a
+virtualenv you may use <code>pip</code> command; to install each package there are
+2 simple ways: install them one by one or create a requirements.txt file
+with one library per line:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>numpy
+</span></span><span class=line><span class=cl>pandas
+</span></span><span class=line><span class=cl>matplotlib
+</span></span><span class=line><span class=cl>jupyter
+</span></span><span class=line><span class=cl>scipy
+</span></span></code></pre></td></tr></table></div></div><p>or if you want you can specify the version if you want to avoid the
+installation of the latest stable release of the softwares:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>numpy</span><span class=o>==</span>1.10
+</span></span><span class=line><span class=cl><span class=nv>pandas</span><span class=o>==</span>0.18.1
+</span></span><span class=line><span class=cl>jupyter
+</span></span><span class=line><span class=cl><span class=nv>matplotlib</span><span class=o>==</span>1.5.1
+</span></span><span class=line><span class=cl>scipy
+</span></span></code></pre></td></tr></table></div></div><p>Now <code>pip install -r requirements.txt</code> will install all your software and
+the related dependencies; and your data science oriented virtualenv is
+now ready to go.</p><h2 id=the-anaconda-python-distribution>The Anaconda© <em>python</em> distribution</h2><p>From my personal point of view, a more appropriate way than using
+virtualenv is to adopt the
+<a class=link href=https://www.continuum.io/downloads target=_blank rel=noopener>Anaconda</a> platform. Anaconda is the
+leading open data science platform powered by Python. The open source
+version of Anaconda is a high performance distribution of Python and R
+and includes over 100 of the most popular Python, R and Scala packages
+for data science.</p><p>Additionally, you'll have access to over 720 packages that can easily
+be installed with conda, our renowned package, dependency and
+environment manager, that is included in Anaconda.</p><p>If you're interesting on "Why should I use Anaconda?" I may suggest
+you to read:</p><ul><li><a class=link href=https://www.continuum.io/why-anaconda target=_blank rel=noopener>https://www.continuum.io/why-anaconda</a></li><li><a class=link href=https://www.reddit.com/r/Python/comments/3t23vv/what_advantages_are_there_of_using_anaconda target=_blank rel=noopener>https://www.reddit.com/r/Python/comments/3t23vv/what_advantages_are_there_of_using_anaconda</a></li></ul><p>The two principal advantages more useful in my own experience are the
+user level install of the version of python you want and the
+"<em>batteries included</em>" for data science (e.g. numpy, scipy, PyQt,
+spyder IDE, etc.)</p><p>Install Anaconda is very simple, just <a class=link href=https://www.anaconda.com/products/individual target=_blank rel=noopener>download the rigth package</a>
+for your O.S. and use the instructions on the page to install it in the
+proper way.</p><p>For instance if you use Linux or Mac OSX:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>bash Anaconda-v-0.x.y.sh
+</span></span></code></pre></td></tr></table></div></div><p>and follow the instructions on the screen. Note that during the Anaconda
+installation process it will ask you to add a directive in your bash
+profile to change your default python path. In this way Anaconda python
+distribution will be your new python ecosystem, otherwise if you answer
+<strong>no</strong> to use the Anaconda python you have to select the python
+executable by hand.</p><p>Now that Anaconda is installed you are able to create a new <em>conda</em>
+environment or anyway you can use the root env with a lot of packages.
+Let's see how to create a conda env now:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>conda create -n envname
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># if you want to pass a specific python version</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>conda create -n envname <span class=nv>python</span><span class=o>=</span>2.7
+</span></span></code></pre></td></tr></table></div></div><p>Once the env is created you may activate it</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>source</span> activate envname
+</span></span></code></pre></td></tr></table></div></div><p>This should procude something like this:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>(</span>envname<span class=o>)</span> user@hostname$
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># check your python version</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>(</span>envname<span class=o>)</span> user@hostname$ python
+</span></span><span class=line><span class=cl>Python 3.5.2 <span class=p>|</span>Continuum Analytics, Inc.<span class=p>|</span> <span class=o>(</span>default, Jul  <span class=m>2</span> 2016, 17:52:12<span class=o>)</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>GCC 4.2.1 Compatible Apple LLVM 4.2 <span class=o>(</span>clang-425.0.28<span class=o>)]</span> on darwin
+</span></span><span class=line><span class=cl>Type <span class=s2>&#34;help&#34;</span>, <span class=s2>&#34;copyright&#34;</span>, <span class=s2>&#34;credits&#34;</span> or <span class=s2>&#34;license&#34;</span> <span class=k>for</span> more information.
+</span></span><span class=line><span class=cl>&gt;&gt;&gt;
+</span></span></code></pre></td></tr></table></div></div><p>Now, as used with the [virtualenv]{.title-ref} tool we can install the
+packages we need in our conda env with the conda command.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>(</span>envname<span class=o>)</span> user@hostname$ conda install pandas   <span class=c1># e.g. install pandas package</span>
+</span></span></code></pre></td></tr></table></div></div><p>Managing the environments is quite easy, there are several options to
+use with conda command; <a class=link href=https://docs.conda.io/projects/conda/en/4.6.0/_downloads/52a95608c49671267e40c689e0bc00ca/conda-cheatsheet.pdf target=_blank rel=noopener>here a good cheatsheet</a> with all the
+reference you need.</p><p>Remember that Anaconda is batteries included so it's possible you have
+all the packages you need in the root env. Without create or activate
+any environment try to check the library installed in your conda root
+instance, you should have something like this</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>user@hostname$ conda list
+</span></span><span class=line><span class=cl>...
+</span></span><span class=line><span class=cl>ruamel_yaml               0.11.14                  py35_0
+</span></span><span class=line><span class=cl>sasl                      0.2.1                     &lt;pip&gt;
+</span></span><span class=line><span class=cl>scikit-image              0.12.3              np111py35_1
+</span></span><span class=line><span class=cl>scikit-learn              0.17.1              np111py35_2
+</span></span><span class=line><span class=cl>scipy                     0.18.1              np111py35_0
+</span></span><span class=line><span class=cl>scp                       0.10.2                    &lt;pip&gt;
+</span></span><span class=line><span class=cl>seaborn                   0.7.1                     &lt;pip&gt;
+</span></span><span class=line><span class=cl>...
+</span></span></code></pre></td></tr></table></div></div><p>As you can notice some packages in the previous snippet are installed
+via <code>pip</code>, this means that with anaconda and within any
+conda env you can use also the <code>pip</code> command to get the
+python modules you want.</p><h3 id=import-and-export-a-conda-environment>Import and Export a conda environment</h3><p>To enable other people to create an exact copy of your environment, you
+can export the active environment file.</p><p>Activate the environment you wish to export:</p><p><strong>Linux, OS X</strong>: <code>source activate envname</code></p><p><strong>windows</strong>: <code>activate envname</code></p><p>Now export your env to new declarative file:</p><p><code>conda env export > environment.yml</code></p><p>NOTE: If you already have an <em>environment.yml</em> file in you current
+directory, it will be overwritten with the new file.</p><p>If you instead of exporting your env you want to create a new conda
+environment from an <strong>.yml</strong> file:</p><p><code>conda env create -f environment.yml</code></p><p>The enviromnent files can be created by hand just beeing compliant with
+some basic ruels. For instance if you want to set your dependencies
+these are the rules to follow:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>env_name: stats
+</span></span><span class=line><span class=cl>dependencies:
+</span></span><span class=line><span class=cl>   - numpy
+</span></span><span class=line><span class=cl>   - pandas
+</span></span><span class=line><span class=cl>   - scipy
+</span></span></code></pre></td></tr></table></div></div><p>and then save your file with the name you want.</p><p>Unlike <code>pip</code>, <code>conda</code> is language-agnostic, this
+permit you to use the R language in your conda environment, and
+obviously create R based notebooks with jupyter.</p><p>The Anaconda team has created an &ldquo;R Essentials&rdquo; bundle with the IRKernel
+and over 80 of the most used R packages for data science, including
+dplyr, shiny, ggplot2, tidyr,caret and nnet.</p><p>Downloading &ldquo;R Essentials&rdquo; requires conda. Miniconda includes conda,
+Python, and a few other necessary packages, while Anaconda includes all
+this and over 200 of the most popularPython packages for science, math,
+engineering, and data analysis. Users may install all of Anaconda at
+once, or they may install Miniconda at first and then use conda to
+install any other packages they need, including any of the packages in
+Anaconda.</p><p>Once you have conda, you may install &ldquo;R Essentials&rdquo; into the current
+environment:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>conda install -c r r-essentials
+</span></span></code></pre></td></tr></table></div></div><p>and now starting jupyter notebook from your virtual environment
+<code>$ jupyter notebook</code> you are able to create a new R notebook:</p><p><img src=/p/understanding-and-use-python-virtualenvs-from-data-scientist-perspective/jupyter.png width=1447 height=469 srcset="/p/understanding-and-use-python-virtualenvs-from-data-scientist-perspective/jupyter_hu17559336701428278471.png 480w, /p/understanding-and-use-python-virtualenvs-from-data-scientist-perspective/jupyter_hu8565250403856139710.png 1024w" loading=lazy alt=Jupyter class=gallery-image data-flex-grow=308 data-flex-basis=740px></p><h2 id=references>References</h2><p>Part of this post is inspired by:</p><blockquote><ul><li><a class=link href=https://www.continuum.io/blog/developer/jupyter-and-conda-r target=_blank rel=noopener>https://www.continuum.io/blog/developer/jupyter-and-conda-r</a></li><li><a class=link href=http://python-guide-pt-br.readthedocs.io/en/latest/dev/virtualenvs/ target=_blank rel=noopener>http://python-guide-pt-br.readthedocs.io/en/latest/dev/virtualenvs/</a></li></ul></blockquote></section><section class=social-buttons><a class=resp-sharing-button__link href="https://mastodon.social/share?text=Understanding%20and%20use%20python%20virtualenvs%20from%20Data%20Scientist%20perspective&amp;url=https://ernesto.arbitrio.fyi/p/understanding-and-use-python-virtualenvs-from-data-scientist-perspective/" target=_blank rel=noopener aria-label title=mastodon><div class="resp-sharing-button resp-sharing-button--mastodon resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 480 511.476"><defs><linearGradient id="prefix__a" gradientUnits="userSpaceOnUse" x1="235.378" y1=".003" x2="235.378" y2="506.951"><stop offset="0" stop-color="#6364ff"/><stop offset="1" stop-color="#563acc"/></linearGradient></defs><g fill-rule="nonzero"><path fill="url(#prefix__a)" d="M478.064 113.237c-7.393-54.954-55.29-98.266-112.071-106.656C356.413 5.163 320.121.0 236.045.0h-.628c-84.1.0-102.141 5.163-111.72 6.581C68.498 14.739 18.088 53.655 5.859 109.261-.024 136.646-.651 167.008.443 194.857c1.555 39.939 1.859 79.806 5.487 119.581a562.694 562.694.0 0013.089 78.437c11.625 47.654 58.687 87.313 104.793 103.494a281.073 281.073.0 00153.316 8.09 224.345 224.345.0 0016.577-4.533c12.369-3.928 26.856-8.321 37.506-16.042.146-.107.265-.247.348-.407.086-.161.134-.339.14-.521v-38.543a1.187 1.187.0 00-.119-.491 1.122 1.122.0 00-.773-.604 1.139 1.139.0 00-.503.0 424.932 424.932.0 01-99.491 11.626c-57.664.0-73.171-27.361-77.611-38.752a120.09 120.09.0 01-6.745-30.546 1.123 1.123.0 01.877-1.152c.173-.035.349-.032.518.012a416.876 416.876.0 0097.864 11.623c7.929.0 15.834.0 23.763-.211 33.155-.928 68.103-2.626 100.722-8.997.815-.16 1.63-.3 2.326-.508 51.454-9.883 100.422-40.894 105.397-119.42.185-3.093.651-32.385.651-35.591.022-10.903 3.51-77.343-.511-118.165z"/><path fill="#fff" d="M396.545 174.981v136.53h-54.104V179.002c0-27.896-11.625-42.124-35.272-42.124-25.996.0-39.017 16.833-39.017 50.074v72.531h-53.777v-72.531c0-33.241-13.044-50.074-39.04-50.074-23.507.0-35.248 14.228-35.248 42.124v132.509H86.006v-136.53c0-27.896 7.123-50.059 21.366-66.488 14.695-16.387 33.97-24.803 57.896-24.803 27.691.0 48.617 10.647 62.568 31.917l13.464 22.597 13.484-22.597c13.951-21.27 34.877-31.917 62.521-31.917 23.902.0 43.177 8.416 57.919 24.803 14.231 16.414 21.336 38.577 21.321 66.488z"/></g></svg></div></div></a><a class=resp-sharing-button__link href="mailto:?subject=Understanding%20and%20use%20python%20virtualenvs%20from%20Data%20Scientist%20perspective&amp;body=https://ernesto.arbitrio.fyi/p/understanding-and-use-python-virtualenvs-from-data-scientist-perspective/" target=_blank rel=noopener aria-label title=E-Mail><div class="resp-sharing-button resp-sharing-button--email resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg viewBox="0 0 24 24"><path d="M22 4H2C.9 4 0 4.9.0 6v12c0 1.1.9 2 2 2h20c1.1.0 2-.9 2-2V6c0-1.1-.9-2-2-2zM7.25 14.43l-3.5 2c-.08.05-.17.07-.25.07-.17.0-.34-.1-.43-.25-.14-.24-.06-.55.18-.68l3.5-2c.24-.14.55-.06.68.18.14.24.06.55-.18.68zm4.75.07c-.1.0-.2-.03-.27-.08l-8.5-5.5c-.23-.15-.3-.46-.15-.7.15-.22.46-.3.7-.14L12 13.4l8.23-5.32c.23-.15.54-.08.7.15.14.23.07.54-.16.7l-8.5 5.5c-.08.04-.17.07-.27.07zm8.93 1.75c-.1.16-.26.25-.43.25-.08.0-.17-.02-.25-.07l-3.5-2c-.24-.13-.32-.44-.18-.68s.44-.32.68-.18l3.5 2c.24.13.32.44.18.68z"/></svg></div></div></a><a class=resp-sharing-button__link href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://ernesto.arbitrio.fyi/p/understanding-and-use-python-virtualenvs-from-data-scientist-perspective/&amp;title=Understanding%20and%20use%20python%20virtualenvs%20from%20Data%20Scientist%20perspective&amp;summary=Understanding%20and%20use%20python%20virtualenvs%20from%20Data%20Scientist%20perspective&amp;https://ernesto.arbitrio.fyi/p/understanding-and-use-python-virtualenvs-from-data-scientist-perspective/" target=_blank rel=noopener aria-label><div class="resp-sharing-button resp-sharing-button--linkedin resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg viewBox="0 0 24 24"><path d="M6.5 21.5h-5v-13h5v13zM4 6.5C2.5 6.5 1.5 5.3 1.5 4s1-2.4 2.5-2.4c1.6.0 2.5 1 2.6 2.5.0 1.4-1 2.5-2.6 2.5zm11.5 6c-1 0-2 1-2 2v7h-5v-13h5V10s1.6-1.5 4-1.5c3 0 5 2.2 5 6.3v6.7h-5v-7c0-1-1-2-2-2z"/></svg></div></div></a></section><footer class=article-footer><section class=article-tags><a href=/tags/python/>Python</a>
+<a href=/tags/python-virtualenv/>Python-Virtualenv</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article class=has-image><a href=/p/boost-your-python-testing-workflow-with-the-pytest-runner-vs-code-extension/><div class=article-image><img src=/p/boost-your-python-testing-workflow-with-the-pytest-runner-vs-code-extension/cover.2714c4c9e56e48c4c1baa66f5bdaaa19_hu6741047405317567879.png width=250 height=150 loading=lazy alt="Featured image of post Boost Your Python Testing Workflow with the Pytest Runner VS Code Extension" data-key=boost-your-python-testing-workflow-with-the-pytest-runner-vs-code-extension data-hash="md5-JxTEyeVuSMTBuqZvW9qqGQ=="></div><div class=article-details><h2 class=article-title>Boost Your Python Testing Workflow with the Pytest Runner VS Code Extension</h2></div></a></article><article class=has-image><a href=/p/create-your-custom-interactive-shell-with-python/><div class=article-image><img src=/p/create-your-custom-interactive-shell-with-python/cover.33ac33976acb4820cda028fc5712a4fc_hu3256285612532885944.png width=250 height=150 loading=lazy alt="Featured image of post Create your custom interactive shell with python 🐍" data-key=create-your-custom-interactive-shell-with-python data-hash="md5-M6wzl2rLSCDNoCj8VxKk/A=="></div><div class=article-details><h2 class=article-title>Create your custom interactive shell with python 🐍</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
+2018 -
+2024 Ernesto Arbitrio</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.29.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

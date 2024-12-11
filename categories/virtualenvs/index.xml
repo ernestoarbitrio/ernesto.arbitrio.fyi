@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Virtualenvs on Ernesto Arbitrio</title><link>https://ernesto.arbitrio.fyi/categories/virtualenvs/</link><description>Recent content in Virtualenvs on Ernesto Arbitrio</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 19 Jun 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://ernesto.arbitrio.fyi/categories/virtualenvs/index.xml" rel="self" type="application/rss+xml"/><item><title>Understanding and use python virtualenvs from Data Scientist perspective</title><link>https://ernesto.arbitrio.fyi/p/understanding-and-use-python-virtualenvs-from-data-scientist-perspective/</link><pubDate>Tue, 19 Jun 2018 00:00:00 +0000</pubDate><guid>https://ernesto.arbitrio.fyi/p/understanding-and-use-python-virtualenvs-from-data-scientist-perspective/</guid><description>&lt;p>A Virtual Environment is a real good way to keep the dependencies
+required by different projects in separate places, by creating virtual
+Python environments for each of them. It solves the &amp;ldquo;Project X depends
+on version 1.x but, Project Y needs 4.x&amp;rdquo; dilemma, and keeps your global
+site-packages directory clean and manageable. For example, you can work
+on a project which requires &lt;code>matplotlib 1.5.3&lt;/code> while also maintaining a
+project which requires &lt;code>matplotlib 1.4.2&lt;/code>.&lt;/p>
+&lt;p>There are different tools that can manage python virtual environment,
+those I will show are:&lt;/p>
+&lt;ul>
+&lt;li>virtualenv&lt;/li>
+&lt;li>anaconda (by continuum analytics)&lt;/li>
+&lt;/ul>
+&lt;p>The first one is the most popular for general pourpose coding projects,
+anaconda is much more suitable for who works in data science field. In
+this post I would like to explain out how to install and use both of
+them to create your python virtualenv.&lt;/p>
+&lt;h2 id="virtualenv">Virtualenv
+&lt;/h2>&lt;p>When you run &lt;code>virtualenv&lt;/code> command inside your shell, it
+creates a folder which contains all the necessary executables to use the
+packages that a Python project would need.&lt;/p>
+&lt;p>To install virtualenv via pip:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">pip install virtualenv
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>To install python pip via s.o. package manager (ubuntu for instance):&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo apt-get install python-pip
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="basic-usage">Basic usage
+&lt;/h2>&lt;p>Create a firt virtual environment for your project:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">cd&lt;/span> my_venv_dir
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">virtualenv myproject
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;code>virtualenv myproject&lt;/code> will create a folder in the directory you are
+which will contain the Python executable files, and a copy of the pip
+library which you can use to install other packages. Usually I do not
+create the virtual environment within the source code directory in order
+to keep venv and code separate. In this way I don't need to exclude the
+virtualenv directory from the version control system I will use for
+software versioning.&lt;/p>
+&lt;p>In your virtualenvironment directory you shuold have something like
+this:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ ls -la
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">drwxr-xr-x &lt;span class="m">16&lt;/span> user staff &lt;span class="m">544&lt;/span> May &lt;span class="m">15&lt;/span> 06:33 bin
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">drwxr-xr-x &lt;span class="m">3&lt;/span> user staff &lt;span class="m">102&lt;/span> May &lt;span class="m">15&lt;/span> 06:30 include
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">drwxr-xr-x &lt;span class="m">4&lt;/span> user staff &lt;span class="m">136&lt;/span> May &lt;span class="m">15&lt;/span> 06:33 lib
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rw-r--r-- &lt;span class="m">1&lt;/span> user staff &lt;span class="m">60&lt;/span> May &lt;span class="m">15&lt;/span> 06:33 pip-selfcheck.json
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>You can also use the Python interpreter of your choice (like python2.7).&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">virtualenv -p /usr/local/bin/python2 myproject
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Naturally you need change the python 2 path with yours.&lt;/p>
+&lt;p>To begin using the virtual environment, it needs to be activated:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">source&lt;/span> /myproject/bin/activate
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>The name of the current virtual environment will now appear as prefix of
+the prompt (e.g. &lt;code>$(myproject)username@yourcomputer&lt;/code>) to let you know
+that it&amp;rsquo;s active. From now on, any package that you install using pip
+will be placed in the myproject folder, in this way the global Python
+installation will remain clean.&lt;/p>
+&lt;p>Install packages as usual:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">pip install matplotlib
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>If you want to deactivate your virtualenv with:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">deactivate
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>This puts you back to the system&amp;rsquo;s default Python interpreter with all
+its installed libraries.&lt;/p>
+&lt;p>To delete a virtual environment, just delete the folder. (In this case,
+it would be &lt;code>rm -rf myproject&lt;/code>.)&lt;/p>
+&lt;p>After a while, though, you might end up with a lot of virtual
+environments littered across your system, and its possible you&amp;rsquo;ll forget
+their names or where they were placed.&lt;/p>
+&lt;h2 id="extra-commands">Extra commands
+&lt;/h2>&lt;p>In order to keep your environment consistent, it&amp;rsquo;s a good idea to
+&amp;ldquo;freeze&amp;rdquo; the current state of the environment packages. To do this, run&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">pip freeze &amp;gt; requirements.txt
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>This will create a requirements.txt file, which contains a list of all
+the packages in the current environment, and their respective versions.
+You can see the list of installed packages without the requirements
+format using &lt;code>pip list&lt;/code>. Later it will be easier for a different
+developer (or you, if you need to re-create the environment) to install
+the same packages using the same versions:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">pip install -r requirements.txt
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Remember to add the &lt;em>requirements file&lt;/em> in your current project
+directory; this can help ensure consistency across installations, across
+deployments, and across developers.&lt;/p>
+&lt;p>Now let's take a look to the packages you need for starting a new
+virtual environment for data analytics projects. The most used by me
+are: &lt;code>numpy&lt;/code>, &lt;code>pandas&lt;/code>, &lt;code>matplotlib&lt;/code>, &lt;code>jupyter notebook&lt;/code>, &lt;code>scipy&lt;/code>;
+naturaly each of you can use those who prefer.&lt;/p>
+&lt;p>As you can see in the previous paragraphs to install a python lib in a
+virtualenv you may use &lt;code>pip&lt;/code> command; to install each package there are
+2 simple ways: install them one by one or create a requirements.txt file
+with one library per line:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">numpy
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">pandas
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">matplotlib
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">jupyter
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">scipy
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>or if you want you can specify the version if you want to avoid the
+installation of the latest stable release of the softwares:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="nv">numpy&lt;/span>&lt;span class="o">==&lt;/span>1.10
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">pandas&lt;/span>&lt;span class="o">==&lt;/span>0.18.1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">jupyter
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">matplotlib&lt;/span>&lt;span class="o">==&lt;/span>1.5.1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">scipy
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Now &lt;code>pip install -r requirements.txt&lt;/code> will install all your software and
+the related dependencies; and your data science oriented virtualenv is
+now ready to go.&lt;/p>
+&lt;h2 id="the-anaconda-python-distribution">The Anaconda© &lt;em>python&lt;/em> distribution
+&lt;/h2>&lt;p>From my personal point of view, a more appropriate way than using
+virtualenv is to adopt the
+&lt;a class="link" href="https://www.continuum.io/downloads" target="_blank" rel="noopener"
+>Anaconda&lt;/a> platform. Anaconda is the
+leading open data science platform powered by Python. The open source
+version of Anaconda is a high performance distribution of Python and R
+and includes over 100 of the most popular Python, R and Scala packages
+for data science.&lt;/p>
+&lt;p>Additionally, you'll have access to over 720 packages that can easily
+be installed with conda, our renowned package, dependency and
+environment manager, that is included in Anaconda.&lt;/p>
+&lt;p>If you're interesting on &amp;quot;Why should I use Anaconda?&amp;quot; I may suggest
+you to read:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://www.continuum.io/why-anaconda" target="_blank" rel="noopener"
+>https://www.continuum.io/why-anaconda&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.reddit.com/r/Python/comments/3t23vv/what_advantages_are_there_of_using_anaconda" target="_blank" rel="noopener"
+>https://www.reddit.com/r/Python/comments/3t23vv/what_advantages_are_there_of_using_anaconda&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>The two principal advantages more useful in my own experience are the
+user level install of the version of python you want and the
+&amp;quot;&lt;em>batteries included&lt;/em>&amp;quot; for data science (e.g. numpy, scipy, PyQt,
+spyder IDE, etc.)&lt;/p>
+&lt;p>Install Anaconda is very simple, just &lt;a class="link" href="https://www.anaconda.com/products/individual" target="_blank" rel="noopener"
+>download the rigth package&lt;/a>
+for your O.S. and use the instructions on the page to install it in the
+proper way.&lt;/p>
+&lt;p>For instance if you use Linux or Mac OSX:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">bash Anaconda-v-0.x.y.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>and follow the instructions on the screen. Note that during the Anaconda
+installation process it will ask you to add a directive in your bash
+profile to change your default python path. In this way Anaconda python
+distribution will be your new python ecosystem, otherwise if you answer
+&lt;strong>no&lt;/strong> to use the Anaconda python you have to select the python
+executable by hand.&lt;/p>
+&lt;p>Now that Anaconda is installed you are able to create a new &lt;em>conda&lt;/em>
+environment or anyway you can use the root env with a lot of packages.
+Let's see how to create a conda env now:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">conda create -n envname
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># if you want to pass a specific python version&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">conda create -n envname &lt;span class="nv">python&lt;/span>&lt;span class="o">=&lt;/span>2.7
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Once the env is created you may activate it&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">source&lt;/span> activate envname
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>This should procude something like this:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="o">(&lt;/span>envname&lt;span class="o">)&lt;/span> user@hostname$
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># check your python version&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">(&lt;/span>envname&lt;span class="o">)&lt;/span> user@hostname$ python
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Python 3.5.2 &lt;span class="p">|&lt;/span>Continuum Analytics, Inc.&lt;span class="p">|&lt;/span> &lt;span class="o">(&lt;/span>default, Jul &lt;span class="m">2&lt;/span> 2016, 17:52:12&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">[&lt;/span>GCC 4.2.1 Compatible Apple LLVM 4.2 &lt;span class="o">(&lt;/span>clang-425.0.28&lt;span class="o">)]&lt;/span> on darwin
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Type &lt;span class="s2">&amp;#34;help&amp;#34;&lt;/span>, &lt;span class="s2">&amp;#34;copyright&amp;#34;&lt;/span>, &lt;span class="s2">&amp;#34;credits&amp;#34;&lt;/span> or &lt;span class="s2">&amp;#34;license&amp;#34;&lt;/span> &lt;span class="k">for&lt;/span> more information.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&amp;gt;&amp;gt;&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Now, as used with the [virtualenv]{.title-ref} tool we can install the
+packages we need in our conda env with the conda command.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="o">(&lt;/span>envname&lt;span class="o">)&lt;/span> user@hostname$ conda install pandas &lt;span class="c1"># e.g. install pandas package&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Managing the environments is quite easy, there are several options to
+use with conda command; &lt;a class="link" href="https://docs.conda.io/projects/conda/en/4.6.0/_downloads/52a95608c49671267e40c689e0bc00ca/conda-cheatsheet.pdf" target="_blank" rel="noopener"
+>here a good cheatsheet&lt;/a> with all the
+reference you need.&lt;/p>
+&lt;p>Remember that Anaconda is batteries included so it's possible you have
+all the packages you need in the root env. Without create or activate
+any environment try to check the library installed in your conda root
+instance, you should have something like this&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">user@hostname$ conda list
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">...
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ruamel_yaml 0.11.14 py35_0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sasl 0.2.1 &amp;lt;pip&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">scikit-image 0.12.3 np111py35_1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">scikit-learn 0.17.1 np111py35_2
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">scipy 0.18.1 np111py35_0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">scp 0.10.2 &amp;lt;pip&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">seaborn 0.7.1 &amp;lt;pip&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">...
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>As you can notice some packages in the previous snippet are installed
+via &lt;code>pip&lt;/code>, this means that with anaconda and within any
+conda env you can use also the &lt;code>pip&lt;/code> command to get the
+python modules you want.&lt;/p>
+&lt;h3 id="import-and-export-a-conda-environment">Import and Export a conda environment
+&lt;/h3>&lt;p>To enable other people to create an exact copy of your environment, you
+can export the active environment file.&lt;/p>
+&lt;p>Activate the environment you wish to export:&lt;/p>
+&lt;p>&lt;strong>Linux, OS X&lt;/strong>: &lt;code>source activate envname&lt;/code>&lt;/p>
+&lt;p>&lt;strong>windows&lt;/strong>: &lt;code>activate envname&lt;/code>&lt;/p>
+&lt;p>Now export your env to new declarative file:&lt;/p>
+&lt;p>&lt;code>conda env export &amp;gt; environment.yml&lt;/code>&lt;/p>
+&lt;p>NOTE: If you already have an &lt;em>environment.yml&lt;/em> file in you current
+directory, it will be overwritten with the new file.&lt;/p>
+&lt;p>If you instead of exporting your env you want to create a new conda
+environment from an &lt;strong>.yml&lt;/strong> file:&lt;/p>
+&lt;p>&lt;code>conda env create -f environment.yml&lt;/code>&lt;/p>
+&lt;p>The enviromnent files can be created by hand just beeing compliant with
+some basic ruels. For instance if you want to set your dependencies
+these are the rules to follow:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">env_name: stats
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">dependencies:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - numpy
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - pandas
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> - scipy
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>and then save your file with the name you want.&lt;/p>
+&lt;p>Unlike &lt;code>pip&lt;/code>, &lt;code>conda&lt;/code> is language-agnostic, this
+permit you to use the R language in your conda environment, and
+obviously create R based notebooks with jupyter.&lt;/p>
+&lt;p>The Anaconda team has created an &amp;ldquo;R Essentials&amp;rdquo; bundle with the IRKernel
+and over 80 of the most used R packages for data science, including
+dplyr, shiny, ggplot2, tidyr,caret and nnet.&lt;/p>
+&lt;p>Downloading &amp;ldquo;R Essentials&amp;rdquo; requires conda. Miniconda includes conda,
+Python, and a few other necessary packages, while Anaconda includes all
+this and over 200 of the most popularPython packages for science, math,
+engineering, and data analysis. Users may install all of Anaconda at
+once, or they may install Miniconda at first and then use conda to
+install any other packages they need, including any of the packages in
+Anaconda.&lt;/p>
+&lt;p>Once you have conda, you may install &amp;ldquo;R Essentials&amp;rdquo; into the current
+environment:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">conda install -c r r-essentials
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>and now starting jupyter notebook from your virtual environment
+&lt;code>$ jupyter notebook&lt;/code> you are able to create a new R notebook:&lt;/p>
+&lt;p>&lt;img src="https://ernesto.arbitrio.fyi/p/understanding-and-use-python-virtualenvs-from-data-scientist-perspective/jupyter.png"
+width="1447"
+height="469"
+srcset="https://ernesto.arbitrio.fyi/p/understanding-and-use-python-virtualenvs-from-data-scientist-perspective/jupyter_hu17559336701428278471.png 480w, https://ernesto.arbitrio.fyi/p/understanding-and-use-python-virtualenvs-from-data-scientist-perspective/jupyter_hu8565250403856139710.png 1024w"
+loading="lazy"
+alt="Jupyter"
+class="gallery-image"
+data-flex-grow="308"
+data-flex-basis="740px"
+>&lt;/p>
+&lt;h2 id="references">References
+&lt;/h2>&lt;p>Part of this post is inspired by:&lt;/p>
+&lt;blockquote>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://www.continuum.io/blog/developer/jupyter-and-conda-r" target="_blank" rel="noopener"
+>https://www.continuum.io/blog/developer/jupyter-and-conda-r&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="http://python-guide-pt-br.readthedocs.io/en/latest/dev/virtualenvs/" target="_blank" rel="noopener"
+>http://python-guide-pt-br.readthedocs.io/en/latest/dev/virtualenvs/&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/blockquote></description></item></channel></rss>

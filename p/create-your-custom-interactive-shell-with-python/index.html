@@ -1,0 +1,193 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="It can happen that, sometimes, you need a CLI for you application, and maybe could be nice to have a custom interactive shell with command completion and history. Python has the Cmd class within the cmd module that provides a simple framework for writing line-oriented command interpreters.\nThe skeleton of the shell 1 2 3 4 5 6 from cmd import Cmd class MyPrompt(Cmd): pass MyPrompt().cmdloop() The Cmd.cmdloop() repeatedly issue a prompt, accept input, parse an initial prefix off the received input, and dispatch to action methods, passing them the remainder of the line as argument.\n"><title>Create your custom interactive shell with python 🐍</title>
+<link rel=canonical href=https://ernesto.arbitrio.fyi/p/create-your-custom-interactive-shell-with-python/><link rel=stylesheet href=/scss/style.min.3148cfb15fa29b928d475c6fc453c58f0705eb56d379e2789ba6fcac7c33d1d8.css><meta property='og:title' content="Create your custom interactive shell with python 🐍"><meta property='og:description' content="It can happen that, sometimes, you need a CLI for you application, and maybe could be nice to have a custom interactive shell with command completion and history. Python has the Cmd class within the cmd module that provides a simple framework for writing line-oriented command interpreters.\nThe skeleton of the shell 1 2 3 4 5 6 from cmd import Cmd class MyPrompt(Cmd): pass MyPrompt().cmdloop() The Cmd.cmdloop() repeatedly issue a prompt, accept input, parse an initial prefix off the received input, and dispatch to action methods, passing them the remainder of the line as argument.\n"><meta property='og:url' content='https://ernesto.arbitrio.fyi/p/create-your-custom-interactive-shell-with-python/'><meta property='og:site_name' content='Ernesto Arbitrio'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='python'><meta property='article:tag' content='advanced-features'><meta property='article:published_time' content='2022-01-19T12:52:43+01:00'><meta property='article:modified_time' content='2022-01-19T12:52:43+01:00'><meta property='og:image' content='https://ernesto.arbitrio.fyi/p/create-your-custom-interactive-shell-with-python/cover.png'><meta name=twitter:title content="Create your custom interactive shell with python 🐍"><meta name=twitter:description content="It can happen that, sometimes, you need a CLI for you application, and maybe could be nice to have a custom interactive shell with command completion and history. Python has the Cmd class within the cmd module that provides a simple framework for writing line-oriented command interpreters.\nThe skeleton of the shell 1 2 3 4 5 6 from cmd import Cmd class MyPrompt(Cmd): pass MyPrompt().cmdloop() The Cmd.cmdloop() repeatedly issue a prompt, accept input, parse an initial prefix off the received input, and dispatch to action methods, passing them the remainder of the line as argument.\n"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content='https://ernesto.arbitrio.fyi/p/create-your-custom-interactive-shell-with-python/cover.png'><link rel="shortcut icon" href=/favicon.png><script async src="https://www.googletagmanager.com/gtag/js?id=G-L18ZJ5LY2H"></script><script>var dnt,doNotTrack=!1;if(!1&&(dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes"),!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-L18ZJ5LY2H")}</script></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/ea-avatar_hu8252815294587868422.png width=300 height=300 class=site-logo loading=lazy alt=Avatar></a></figure><div class=site-meta><h1 class=site-name><a href=/>Ernesto Arbitrio</a></h1><h2 class=site-description>Software Engineer</h2></div></header><ol class=menu-social><li><a href=https://github.com/ernestoarbitrio target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://mastodon.social/@pamaron target=_blank title=Mastodon rel=me><svg class="icon icon-tabler icon-tabler-brand-mastodon" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18.648 15.254C16.832 17.017 12 16.88 12 16.88a18.262 18.262.0 01-3.288-.256c1.127 1.985 4.12 2.81 8.982 2.475-1.945 2.013-13.598 5.257-13.668-7.636L4 10.309c0-3.036.023-4.115 1.352-5.633C7.023 2.766 12 3.01 12 3.01s4.977-.243 6.648 1.667C19.977 6.195 20 7.274 20 10.31s-.456 4.074-1.352 4.944z"/><path d="M12 11.204V8.278C12 7.02 11.105 6 10 6S8 7.02 8 8.278V13m4-4.722C12 7.02 12.895 6 14 6s2 1.02 2 2.278V13"/></svg></a></li><li><a href=https://www.linkedin.com/in/ernestoarbitrio target=_blank title=LinkedIn rel=me><svg class="icon icon-tabler icon-tabler-brand-linkedin" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4m0 2a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M8 11v5"/><path d="M8 8v.01"/><path d="M12 16v-5"/><path d="M16 16v-3a2 2 0 00-4 0"/></svg></a></li><li><a href=/index.xml target=_blank title=RSS rel=me><svg class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="5" cy="19" r="1"/><path d="M4 4a16 16 0 0116 16"/><path d="M4 11a9 9 0 019 9"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><span>Home</span></a></li><li><a href=/about/><span>About</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#the-skeleton-of-the-shell>The skeleton of the shell</a></li><li><a href=#prompt-and-intro>Prompt and Intro</a></li><li><a href=#complete-example>Complete example</a></li></ol></nav></div></section></aside><main class="main full-width"><article class="has-image main-article"><header class=article-header><div class=article-image><a href=/p/create-your-custom-interactive-shell-with-python/><img src=/p/create-your-custom-interactive-shell-with-python/cover_hu14329789805904903699.png srcset="/p/create-your-custom-interactive-shell-with-python/cover_hu14329789805904903699.png 800w, /p/create-your-custom-interactive-shell-with-python/cover_hu13036452140389944704.png 1600w" width=800 height=800 loading=lazy alt="Featured image of post Create your custom interactive shell with python 🐍"></a></div><div class=article-details><header class=article-category><a href=/categories/python/>Python</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/p/create-your-custom-interactive-shell-with-python/>Create your custom interactive shell with python 🐍</a></h2></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Jan 19, 2022</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>4 minute read</time></div></footer></div></header><section class=article-content><p>It can happen that, sometimes, you need a CLI for you application, and maybe could be
+nice to have a custom interactive shell with command completion and history. Python has the
+<code>Cmd</code> class within the <a class=link href=https://docs.python.org/3/library/cmd.html target=_blank rel=noopener>cmd</a> module that
+provides a simple framework for writing line-oriented command interpreters.</p><h2 id=the-skeleton-of-the-shell>The skeleton of the shell</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>cmd</span> <span class=kn>import</span> <span class=n>Cmd</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>MyPrompt</span><span class=p>(</span><span class=n>Cmd</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=k>pass</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>MyPrompt</span><span class=p>()</span><span class=o>.</span><span class=n>cmdloop</span><span class=p>()</span>
+</span></span></code></pre></td></tr></table></div></div><p>The <code>Cmd.cmdloop()</code> repeatedly issue a prompt, accept input, parse an initial
+prefix off the received input, and dispatch to action methods, passing them
+the remainder of the line as argument.</p><p>Basically when we run the script above it will display a default prompt:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>(</span>Cmd<span class=o>)</span>
+</span></span><span class=line><span class=cl>The <span class=sb>``</span>Cmd<span class=sb>``</span> includes the <span class=sb>``</span><span class=nb>help</span><span class=sb>``</span> or <span class=sb>``</span>?<span class=sb>``</span> <span class=nb>command</span> to get your interactive shell help:
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>(</span>Cmd<span class=o>)</span> <span class=nb>help</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Documented commands <span class=o>(</span><span class=nb>type</span> <span class=nb>help</span> &lt;topic&gt;<span class=o>)</span>:
+</span></span><span class=line><span class=cl><span class=o>========================================</span>
+</span></span><span class=line><span class=cl><span class=nb>help</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>(</span>Cmd<span class=o>)</span> ?
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Documented commands <span class=o>(</span><span class=nb>type</span> <span class=nb>help</span> &lt;topic&gt;<span class=o>)</span>:
+</span></span><span class=line><span class=cl><span class=o>========================================</span>
+</span></span><span class=line><span class=cl><span class=nb>help</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>(</span>Cmd<span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>If you would like to <span class=nb>exit</span> the application you need to press <span class=sb>``</span>Ctlr-C<span class=sb>``</span> and get a <span class=sb>``</span>KeyboardInterrupt<span class=sb>``</span>.
+</span></span></code></pre></td></tr></table></div></div><h2 id=prompt-and-intro>Prompt and Intro</h2><p>The default prompt text is <code>(Cmd)</code> but it can be overridden using the prompt
+attribute of the class.</p><p>Furthermore we can set a text to be the banner (or the welcome message for example),
+that is the text message shown when we launch our application.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>cmd</span> <span class=kn>import</span> <span class=n>Cmd</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>MyPrompt</span><span class=p>(</span><span class=n>Cmd</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>prompt</span> <span class=o>=</span> <span class=s2>&#34;myshell&gt;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>intro</span> <span class=o>=</span> <span class=s2>&#34;Welcome!! Type ? or help for the commands list.&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>pass</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>MyPrompt</span><span class=p>()</span><span class=o>.</span><span class=n>cmdloop</span><span class=p>()</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=complete-example>Complete example</h2><p>Now I&rsquo;d like to show you a complete example of a custom interactive shell.
+Imagine you wanna create a command to compute a sum of bunch of numbers (e.g. <code>1,4,5,78,23</code>).</p><p>I&rsquo;m gonna create a <code>do_sum</code> method that will compute the sum of the numbers.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>cmd</span> <span class=kn>import</span> <span class=n>Cmd</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>MyPrompt</span><span class=p>(</span><span class=n>Cmd</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>prompt</span> <span class=o>=</span> <span class=s2>&#34;myshell&gt; &#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>intro</span> <span class=o>=</span> <span class=s2>&#34;Welcome to MY shell! Type ? to list commands&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>onecmd</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>line</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=k>try</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=nb>super</span><span class=p>()</span><span class=o>.</span><span class=n>onecmd</span><span class=p>(</span><span class=n>line</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>except</span> <span class=ne>Exception</span> <span class=k>as</span> <span class=n>e</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;</span><span class=si>{</span><span class=n>e</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=kc>False</span>  <span class=c1># don&#39;t stop</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>do_exit</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>inp</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;Bye&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=kc>True</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>help_exit</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;exit the application. Shorthand: x q Ctrl-D.&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>default</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>inp</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=n>inp</span> <span class=o>==</span> <span class=s2>&#34;q&#34;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=bp>self</span><span class=o>.</span><span class=n>do_exit</span><span class=p>(</span><span class=n>inp</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;Default: </span><span class=si>{}</span><span class=s2>&#34;</span><span class=o>.</span><span class=n>format</span><span class=p>(</span><span class=n>inp</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>help_sum</span><span class=p>(</span><span class=bp>self</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;Run a sum&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>do_sum</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=nb>input</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=n>lst_input</span> <span class=o>=</span> <span class=p>[</span><span class=nb>int</span><span class=p>(</span><span class=n>n</span><span class=p>)</span> <span class=k>for</span> <span class=n>n</span> <span class=ow>in</span> <span class=nb>input</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s2>&#34;,&#34;</span><span class=p>)]</span>
+</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;The sum is: </span><span class=si>{</span><span class=nb>sum</span><span class=p>(</span><span class=n>lst_input</span><span class=p>)</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>do_EOF</span> <span class=o>=</span> <span class=n>do_exit</span>
+</span></span><span class=line><span class=cl>    <span class=n>help_EOF</span> <span class=o>=</span> <span class=n>help_exit</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s2>&#34;__main__&#34;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>MyPrompt</span><span class=p>()</span><span class=o>.</span><span class=n>cmdloop</span><span class=p>()</span>
+</span></span></code></pre></td></tr></table></div></div><p>and see it in action:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>~ python -m shell
+</span></span><span class=line><span class=cl>Welcome to MY shell! Type ? to list commands
+</span></span><span class=line><span class=cl>myshell&gt; sum 1,2,3,4,5
+</span></span><span class=line><span class=cl>The sum is: <span class=m>15</span>
+</span></span><span class=line><span class=cl>myshell&gt; sum <span class=s2>&#34;a,dsfg&#34;</span>
+</span></span><span class=line><span class=cl>invalid literal <span class=k>for</span> int<span class=o>()</span> with base 10: <span class=s1>&#39;&#34;a&#39;</span>
+</span></span></code></pre></td></tr></table></div></div><p>As you can see the first command return a valid and meaningful output. The second one fails due to the wrong output and it returns the error trace of the python interpreter. That&rsquo;s nice huh? 😎</p><p>Taking a look at the code snippet above you can notice the <code>onecmd</code> method within the <code>MyPromopt</code> class.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>onecmd</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>line</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=k>try</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=nb>super</span><span class=p>()</span><span class=o>.</span><span class=n>onecmd</span><span class=p>(</span><span class=n>line</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>except</span> <span class=ne>Exception</span> <span class=k>as</span> <span class=n>e</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;</span><span class=si>{</span><span class=n>e</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=kc>False</span>  <span class=c1># don&#39;t stop</span>
+</span></span></code></pre></td></tr></table></div></div><p>That method, that extends the one of the super class, is called when the user enters a command, and in case of an exception print the exception. This is a very useful feature to have when you are developing a command line application because in case of an error whatsoever, it won&rsquo;t crash the application, and you can decide you custom fallback action.</p><p>The other method <code>default</code> is called every time a command is entered and it does not correspond to any of the <code>do_*</code> methods.</p><p>What about the <code>do_EOF</code> and <code>help_EOF</code>? You might have noticed that <code>Ctrl-d</code>, prints <code>*** Unknown syntax: EOF</code>.
+That&rsquo;s because Ctrl-d send an EOF (End Of File) signal and by default Cmd does not know what to do with it.</p><p>The solution is to implement the do_EOF method that will be called when the user presses <code>Ctl-d</code>. As we already have a do_exit method, we can just assign that to the do_EOF and have both do the same. In order to provide help for the EOF, we can include a function called help_EOF that is assigned the help_exit function.</p><p>IMHO this is a great built-in feature, very useful when you wanna create a command line application as a public interface of you library.</p><p>On top of the <code>cmd</code> module a lot of 3rd party apps have been created. I&rsquo;d like to mention <a class=link href=https://github.com/python-cmd2/cmd2 target=_blank rel=noopener>cmd2</a> that can be defined a custom <code>cmd</code> module with steroids 😀.</p><p>I hope you enjoied this article! See you at next episode 👋.</p></section><section class=social-buttons><a class=resp-sharing-button__link href="https://mastodon.social/share?text=Create%20your%20custom%20interactive%20shell%20with%20python%20%f0%9f%90%8d&amp;url=https://ernesto.arbitrio.fyi/p/create-your-custom-interactive-shell-with-python/" target=_blank rel=noopener aria-label title=mastodon><div class="resp-sharing-button resp-sharing-button--mastodon resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 480 511.476"><defs><linearGradient id="prefix__a" gradientUnits="userSpaceOnUse" x1="235.378" y1=".003" x2="235.378" y2="506.951"><stop offset="0" stop-color="#6364ff"/><stop offset="1" stop-color="#563acc"/></linearGradient></defs><g fill-rule="nonzero"><path fill="url(#prefix__a)" d="M478.064 113.237c-7.393-54.954-55.29-98.266-112.071-106.656C356.413 5.163 320.121.0 236.045.0h-.628c-84.1.0-102.141 5.163-111.72 6.581C68.498 14.739 18.088 53.655 5.859 109.261-.024 136.646-.651 167.008.443 194.857c1.555 39.939 1.859 79.806 5.487 119.581a562.694 562.694.0 0013.089 78.437c11.625 47.654 58.687 87.313 104.793 103.494a281.073 281.073.0 00153.316 8.09 224.345 224.345.0 0016.577-4.533c12.369-3.928 26.856-8.321 37.506-16.042.146-.107.265-.247.348-.407.086-.161.134-.339.14-.521v-38.543a1.187 1.187.0 00-.119-.491 1.122 1.122.0 00-.773-.604 1.139 1.139.0 00-.503.0 424.932 424.932.0 01-99.491 11.626c-57.664.0-73.171-27.361-77.611-38.752a120.09 120.09.0 01-6.745-30.546 1.123 1.123.0 01.877-1.152c.173-.035.349-.032.518.012a416.876 416.876.0 0097.864 11.623c7.929.0 15.834.0 23.763-.211 33.155-.928 68.103-2.626 100.722-8.997.815-.16 1.63-.3 2.326-.508 51.454-9.883 100.422-40.894 105.397-119.42.185-3.093.651-32.385.651-35.591.022-10.903 3.51-77.343-.511-118.165z"/><path fill="#fff" d="M396.545 174.981v136.53h-54.104V179.002c0-27.896-11.625-42.124-35.272-42.124-25.996.0-39.017 16.833-39.017 50.074v72.531h-53.777v-72.531c0-33.241-13.044-50.074-39.04-50.074-23.507.0-35.248 14.228-35.248 42.124v132.509H86.006v-136.53c0-27.896 7.123-50.059 21.366-66.488 14.695-16.387 33.97-24.803 57.896-24.803 27.691.0 48.617 10.647 62.568 31.917l13.464 22.597 13.484-22.597c13.951-21.27 34.877-31.917 62.521-31.917 23.902.0 43.177 8.416 57.919 24.803 14.231 16.414 21.336 38.577 21.321 66.488z"/></g></svg></div></div></a><a class=resp-sharing-button__link href="mailto:?subject=Create%20your%20custom%20interactive%20shell%20with%20python%20%f0%9f%90%8d&amp;body=https://ernesto.arbitrio.fyi/p/create-your-custom-interactive-shell-with-python/" target=_blank rel=noopener aria-label title=E-Mail><div class="resp-sharing-button resp-sharing-button--email resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg viewBox="0 0 24 24"><path d="M22 4H2C.9 4 0 4.9.0 6v12c0 1.1.9 2 2 2h20c1.1.0 2-.9 2-2V6c0-1.1-.9-2-2-2zM7.25 14.43l-3.5 2c-.08.05-.17.07-.25.07-.17.0-.34-.1-.43-.25-.14-.24-.06-.55.18-.68l3.5-2c.24-.14.55-.06.68.18.14.24.06.55-.18.68zm4.75.07c-.1.0-.2-.03-.27-.08l-8.5-5.5c-.23-.15-.3-.46-.15-.7.15-.22.46-.3.7-.14L12 13.4l8.23-5.32c.23-.15.54-.08.7.15.14.23.07.54-.16.7l-8.5 5.5c-.08.04-.17.07-.27.07zm8.93 1.75c-.1.16-.26.25-.43.25-.08.0-.17-.02-.25-.07l-3.5-2c-.24-.13-.32-.44-.18-.68s.44-.32.68-.18l3.5 2c.24.13.32.44.18.68z"/></svg></div></div></a><a class=resp-sharing-button__link href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://ernesto.arbitrio.fyi/p/create-your-custom-interactive-shell-with-python/&amp;title=Create%20your%20custom%20interactive%20shell%20with%20python%20%f0%9f%90%8d&amp;summary=Create%20your%20custom%20interactive%20shell%20with%20python%20%f0%9f%90%8d&amp;https://ernesto.arbitrio.fyi/p/create-your-custom-interactive-shell-with-python/" target=_blank rel=noopener aria-label><div class="resp-sharing-button resp-sharing-button--linkedin resp-sharing-button--small"><div aria-hidden=true class="resp-sharing-button__icon resp-sharing-button__icon--solid"><svg viewBox="0 0 24 24"><path d="M6.5 21.5h-5v-13h5v13zM4 6.5C2.5 6.5 1.5 5.3 1.5 4s1-2.4 2.5-2.4c1.6.0 2.5 1 2.6 2.5.0 1.4-1 2.5-2.6 2.5zm11.5 6c-1 0-2 1-2 2v7h-5v-13h5V10s1.6-1.5 4-1.5c3 0 5 2.2 5 6.3v6.7h-5v-7c0-1-1-2-2-2z"/></svg></div></div></a></section><footer class=article-footer><section class=article-tags><a href=/tags/python/>Python</a>
+<a href=/tags/advanced-features/>Advanced-Features</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article class=has-image><a href=/p/boost-your-python-testing-workflow-with-the-pytest-runner-vs-code-extension/><div class=article-image><img src=/p/boost-your-python-testing-workflow-with-the-pytest-runner-vs-code-extension/cover.2714c4c9e56e48c4c1baa66f5bdaaa19_hu6741047405317567879.png width=250 height=150 loading=lazy alt="Featured image of post Boost Your Python Testing Workflow with the Pytest Runner VS Code Extension" data-key=boost-your-python-testing-workflow-with-the-pytest-runner-vs-code-extension data-hash="md5-JxTEyeVuSMTBuqZvW9qqGQ=="></div><div class=article-details><h2 class=article-title>Boost Your Python Testing Workflow with the Pytest Runner VS Code Extension</h2></div></a></article><article><a href=/p/understanding-and-use-python-virtualenvs-from-data-scientist-perspective/><div class=article-details><h2 class=article-title>Understanding and use python virtualenvs from Data Scientist perspective</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
+2018 -
+2024 Ernesto Arbitrio</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.29.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>
